@@ -41,12 +41,10 @@ static int isValid( Stack * stack )
 *******************************************************************************/
 void push( Stack * stack, value_t data )
 {
-
   pthread_mutex_lock(&stack->_mutex);
-
   // To help detect stack integrity problems, verify consistency between "top" and "size" attributes
   assert( stack && isValid(stack) );
-
+  
   // provision memory for a new node
   StackNode * newNode = malloc( sizeof(StackNode) );
 
@@ -66,9 +64,7 @@ void push( Stack * stack, value_t data )
 
 value_t pop( Stack * stack )
 {
-
   pthread_mutex_lock(&stack->_mutex);
-
   // To help detect stack integrity problems, verify consistency between "top" and "size" attributes
   assert( stack && isValid(stack) );
   
@@ -78,7 +74,6 @@ value_t pop( Stack * stack )
     pthread_mutex_unlock(&stack->_mutex);
     return (value_t)0;
   }
-
   pthread_mutex_unlock(&stack->_mutex);
 
   pthread_mutex_lock(&stack->_mutex);
